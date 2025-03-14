@@ -24,7 +24,7 @@ export default function Count() {
 
   return (
     <>
-      <div className='@container mx-auto text-center my-3 bg-gray-500 p-3 w-[90%] rounded text-white'>
+      <div className='@container mx-auto text-center my-3 bg-[#242424] p-3 w-[90%] rounded text-white'>
         <h1 className='text-lg'>{count}</h1>
         <div>
           <button onClick={Incr} className='bg-green-600 px-4 py-2 rounded m-2 cursor-pointer'>Increase</button>
@@ -90,7 +90,11 @@ function Showpass() {
 }
 
 function Faq() {
-  let [showans, setshowans] = useState(faqData[0].id);
+  let [showans, setshowans] = useState(null);
+
+  const toggleAnswer = (id) => {
+    setshowans(prevId => prevId === id ? null : id);
+  };
 
   return (
     <div>
@@ -100,7 +104,7 @@ function Faq() {
           {faqData.map((item, index) => {
             return (
               <div key={index} className="border rounded-md shadow">
-                <div className='flex justify-between py-2 px-5 border-b-1 border-gray-500 cursor-pointer' onClick={() => { setshowans(item.id) }}>
+                <div className='flex justify-between py-2 px-5 border-b-1 border-gray-500 cursor-pointer' onClick={() => { toggleAnswer(item.id) }}>
                   <h3 className="font-semibold text-lg">{item.question}</h3>
                   <div>
                     {(showans === item.id) ?
