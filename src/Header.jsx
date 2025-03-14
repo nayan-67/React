@@ -8,9 +8,9 @@ import img2 from './assets/react.svg';
 
 const navigation = [
     { name: 'Dashboard', href: '#', current: true },
-    { name: 'Team', href: '#', current: false },
+    { name: 'Blog', href: '#', current: false },
     { name: 'Projects', href: '#', current: false },
-    { name: 'Calendar', href: '#', current: false },
+    { name: 'Contact', href: '#', current: false },
 ];
 
 function classNames(...classes) {

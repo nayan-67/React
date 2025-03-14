@@ -24,7 +24,7 @@ function Help() {
   let [showModal, setShowModal] = useState(false);
   return (
     <>
-      <div className='fixed bottom-[5rem] right-4 p-3 bg-violet-500 text-white rounded-2xl cursor-pointer text-2xl' onClick={() => setShowModal(true)}>
+      <div className='fixed bottom-[5rem] right-4 p-3 bg-violet-500 text-white rounded-2xl cursor-pointer text-2xl z-50' onClick={() => setShowModal(true)}>
         <FontAwesomeIcon icon={faHeadset} />
       </div>
       <div className={`fixed top-0 left-0 w-full h-full bg-[#151517b2] bg-opacity-25 ${showModal ? '' : 'modal'}`}></div>
