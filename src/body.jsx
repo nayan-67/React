@@ -1,13 +1,11 @@
 import React, { useState } from 'react'
 import './body.css'
-// import 'react-notifications/lib/notifications.css';
 import { cardinfo } from './Data/cardinf';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 import { faqData } from './Data/faqdata';
 import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
 import reactlogo from './assets/react.svg';
-// import { NotificationContainer } from 'react-notifications';
 
 export default function Count() {
   let [count, setcount] = useState(1);
@@ -24,7 +22,7 @@ export default function Count() {
 
   return (
     <>
-      <div className='@container mx-auto text-center my-3 bg-[#242424] p-3 w-[90%] rounded text-white'>
+      <div className='@container mx-auto text-center my-3 bg-[#242424] p-3 w-[90%] rounded text-white font-mono'>
         <h1 className='text-lg'>{count}</h1>
         <div>
           <button onClick={Incr} className='bg-green-600 px-4 py-2 rounded m-2 cursor-pointer'>Increase</button>
@@ -60,7 +58,7 @@ function Card({ citem }) {
       </div>
       <div className='text-center p-5 w-full '>
         <h1 className='font-bold pb-2'>{citem.title}</h1>
-        <p className='text-center'>{citem.body}</p>
+        <p className='text-center font-sans'>{citem.body}</p>
         <button type="button" className='bg-green-600 px-5 py-2 rounded mx-2 mt-3 cursor-pointer text-white hover:bg-green-700 transition delay-100 duration-200 ease-in-out'>Check Out</button>
       </div>
     </div>
@@ -100,7 +98,7 @@ function Faq() {
     <div>
       <div className="p-4 w-[90%] mx-auto my-3 lg:flex justify-between bg-[#161b23] text-gray-200 rounded-lg">
         <div className="space-y-4 lg:w-[60%] ">
-          <h2 className="text-2xl font-bold mb-4 text-center">Frequently Asked Questions</h2>
+          <h2 className="text-2xl font-bold mb-4 text-center font-mono">Frequently Asked Questions</h2>
           {faqData.map((item, index) => {
             return (
               <div key={index} className="border rounded-md shadow">
