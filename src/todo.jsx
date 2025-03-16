@@ -23,11 +23,11 @@ export default function Todo() {
 
   return (
     <>
-      <div className="todo-container w-[90%] border-2 border-gray-800 rounded-lg p-4 mx-auto mt-10 mb-10">
-        <h1 className='text-5xl text-center bg-violet-500 text-white rounded-2xl p-2'>To-Do List</h1>
-        <form className="todo-form flex justify-center items-center" onSubmit={savedata}>
-          <input type="text" className="todo-input w-[70%] border-2 border-gray-600 m-2 rounded-lg p-3" placeholder="Add a new todo..." name='todoname' />
-          <button type="submit" className="todo-btn w-[20%] bg-violet-500 text-white border-2 border-violet-500 rounded-lg p-2 m-2 text-2xl cursor-pointer">
+      <div className="todo-container w-[90%] rounded mx-auto m-8">
+        <h1 className='lg:text-3xl text-2xl font-bold text-center bg-violet-500 text-white rounded p-2 mb-3'>To-Do List</h1>
+        <form className="todo-form lg:w-[90%] flex gap-3 items-center mx-auto my-2 p-3" onSubmit={savedata}>
+          <input type="text" className="todo-input lg:grow-3 grow border-2 border-gray-600 rounded-lg p-3" placeholder="Add a new todo..." name='todoname' />
+          <button type="submit" className="todo-btn lg:grow-1 grow bg-violet-500 text-white border-2 border-violet-500 rounded-lg p-2 lg:text-2xl text-xl cursor-pointer">
             Add
           </button>
         </form>

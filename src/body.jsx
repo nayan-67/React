@@ -60,7 +60,7 @@ function Card({ citem }) {
       </div>
       <div className='text-center p-5 w-full '>
         <h1 className='font-bold pb-2'>{citem.title}</h1>
-        <p className='text-justify'>{citem.body}</p>
+        <p className='text-center'>{citem.body}</p>
         <button type="button" className='bg-green-600 px-5 py-2 rounded mx-2 mt-3 cursor-pointer text-white hover:bg-green-700 transition delay-100 duration-200 ease-in-out'>Check Out</button>
       </div>
     </div>
