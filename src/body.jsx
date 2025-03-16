@@ -30,7 +30,7 @@ export default function Count() {
         </div>
       </div>
       <div className='w-[90%] mx-auto rounded my-3'>
-        <h1 className='text-[2rem] text-center font-bold w-full bg-violet-500 text-white rounded p-3'>Card Component</h1>
+        <h1 className='lg:text-[2rem] text-2xl text-center font-bold w-full bg-violet-500 text-white rounded p-3 font-["Ubuntu"]'>Card Component</h1>
         <div className='flex justify-center flex-wrap'>
 
           {cardinfo.map((card, i) => {
@@ -56,10 +56,10 @@ function Card({ citem }) {
       <div className='w-full h-[150px] p-3 text-center border-b-2 border-gray-200 flex items-center justify-center'>
         <img src={citem.image} alt="item" className='h-[100%] w-auto' />
       </div>
-      <div className='text-center p-5 w-full '>
+      <div className='text-center p-5 w-full font-["Ubuntu"]'>
         <h1 className='font-bold pb-2'>{citem.title}</h1>
-        <p className='text-center font-sans'>{citem.body}</p>
-        <button type="button" className='bg-green-600 px-5 py-2 rounded mx-2 mt-3 cursor-pointer text-white hover:bg-green-700 transition delay-100 duration-200 ease-in-out'>Check Out</button>
+        <p className='text-center'>{citem.body}</p>
+        <button type="button" className='bg-green-600 px-5 py-2 rounded mx-2 mt-3 cursor-pointer text-white hover:bg-green-700 transition delay-100 duration-200 ease-in-out font-bold'>Check Out</button>
       </div>
     </div>
   )
