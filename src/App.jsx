@@ -6,15 +6,28 @@ import { faHeadset, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 import Todo from './todo'
 import modal_img from './assets/Image/wel.png'
+import { Route, Routes, useParams } from 'react-router-dom'
+import error from './assets/Image/error.png'
 
 export default function App() {
 
   return (
     <>
       <Header />
-      <Count />
       <Help />
-      <Todo />
+      <div>
+        <Routes>
+          <Route path='/' element={<Count />} />
+          <Route path='todo' element={<Todo />} />
+          <Route path="*" element={
+            <div className='flex justify-center items-center h-[80vh] '>
+              <img src={error} alt="Error" className='w-90 h-auto'/>
+            </div>
+          } />
+          <Route path="/user/:id" element={<User/>} />
+        </Routes>
+      </div>
+
     </>
   )
 }
@@ -38,4 +51,14 @@ function Help() {
   )
 }
 
+
+function User() {
+
+  const {id}=useParams();
+  return (
+    <div className='flex justify-center items-center h-[80vh] font-["Ubuntu"] text-5xl'>
+      <h1>Hello <span className='font-["Black_Ops_One"]'>{id}</span></h1>
+    </div>
+  )
+}
 
