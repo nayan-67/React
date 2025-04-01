@@ -1,14 +1,19 @@
 import React, { useState } from 'react'
 import './body.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import Pageload from './pageload'
 
 export default function Todo() {
   const [todos, setTodos] = useState([])
+  const [loading, setLoading] = useState(true)
 
   const savedata = (e) => {
     e.preventDefault()
     let tname = e.target.todoname.value;
     if (!todos.includes(tname) && tname.length > 0) {
       setTodos([...todos, tname])
+      e.target.todoname.value = ''
 
     } else {
       alert('Todo already exists or empty')
@@ -20,9 +25,16 @@ export default function Todo() {
       <Todoitem value={v} key={i} todoIndex={i} todos={todos} setTodos={setTodos} />
     )
   })
+  
+
+  setTimeout(()=>{
+    setLoading(false)
+  },1000)
 
   return (
     <>
+      {loading? <Pageload/> : null}
+      {!loading?
       <div className="todo-container w-[90%] rounded mx-auto m-8">
         <h1 className='lg:text-3xl text-2xl font-bold text-center bg-violet-500 text-white rounded p-2 mb-3 font-mono'>To-Do List</h1>
         <form className="todo-form lg:w-[90%] flex gap-3 items-center mx-auto my-2 p-3" onSubmit={savedata}>
@@ -37,6 +49,7 @@ export default function Todo() {
           </ul>
         </div>
       </div>
+      :null}
     </>
   )
 }
@@ -49,9 +62,9 @@ function Todoitem({ value, todoIndex, todos, setTodos }) {
     setTodos(newtodos)
   }
   return (
-    <li className={`todo-li bg-gray-200 text-2xl p-3 m-2 rounded-lg relative text-left ${isdone ? 'line-through decoration-red-600' : ''}`} onClick={() => setisdone(!isdone)}>
+    <li className={`todo-li bg-gray-200 text-2xl p-3 m-2 rounded-lg relative text-left ${isdone ? 'line-through decoration-gray-400 text-gray-400' : ''}`} onClick={() => setisdone(!isdone)}>
       {value}
-      <span className='cursor-pointer right-4 absolute' onClick={deletetodo}>&times;</span>
+      <span className='cursor-pointer right-4 absolute' onClick={deletetodo}><FontAwesomeIcon icon={faTrash}/></span>
     </li>
   )
 }

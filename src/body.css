@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Bungee+Shade&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
 
+
+.body{
+  display: none;
+}
 .activeans {
   height: auto !important;
   transform: scaleY(1) !important;
@@ -29,4 +33,10 @@
   .r-logo {
     height: 200px;
   }
+}
+
+
+.activetab{
+  background-color: #8b25d9dd !important;
+  color: #fff !important;
 }

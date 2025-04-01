@@ -6,9 +6,13 @@ import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 import { faqData } from './Data/faqdata';
 import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
 import reactlogo from './assets/react.svg';
+import { tabdata } from './Data/tabdata';
+import Pageload from './pageload';
 
 export default function Count() {
   let [count, setcount] = useState(1);
+  const [load, setload] = useState(true);
+
 
   function Incr() {
     setcount(count + 1);
@@ -20,29 +24,39 @@ export default function Count() {
   }
 
 
+  setTimeout(() => {
+    setload(false)
+  }, 1500)
+
   return (
     <>
-      <div className='@container mx-auto text-center my-3 bg-[#242424] p-3 w-[90%] rounded text-white font-mono'>
-        <h1 className='text-lg'>{count}</h1>
+      {load ? <Pageload /> : null}
+      {!load ?
         <div>
-          <button onClick={Incr} className='bg-green-600 px-4 py-2 rounded m-2 cursor-pointer'>Increase</button>
-          <button onClick={Decr} disabled={count === 0} className='bg-red-500 px-4 py-2 rounded m-2 cursor-pointer disabled:bg-red-300 disabled:cursor-not-allowed'>Decrease</button>
-        </div>
-      </div>
-      <div className='w-[90%] mx-auto rounded my-3'>
-        <h1 className='lg:text-[2rem] text-2xl text-center font-bold w-full bg-violet-500 text-white rounded p-3 font-["Ubuntu"]'>Card Component</h1>
-        <div className='flex justify-center flex-wrap'>
+          <div className='@container mx-auto text-center my-3 bg-[#242424] p-3 w-[90%] rounded text-white font-mono'>
+            <h1 className='text-lg'>{count}</h1>
+            <div>
+              <button onClick={Incr} className='bg-green-600 px-4 py-2 rounded m-2 cursor-pointer'>Increase</button>
+              <button onClick={Decr} disabled={count === 0} className='bg-red-500 px-4 py-2 rounded m-2 cursor-pointer disabled:bg-red-300 disabled:cursor-not-allowed'>Decrease</button>
+            </div>
+          </div>
+          <div className='w-[90%] mx-auto rounded my-3'>
+            <h1 className='lg:text-[2rem] text-2xl text-center font-bold w-full bg-violet-500 text-white rounded p-3 font-["Ubuntu"]'>Card Component</h1>
+            <div className='flex justify-center flex-wrap'>
 
-          {cardinfo.map((card, i) => {
-            return (
-              <Card citem={card} key={i} />
-            )
-          })}
+              {cardinfo.map((card, i) => {
+                return (
+                  <Card citem={card} key={i} />
+                )
+              })}
 
+            </div>
+          </div>
+          <Showpass />
+          <Faq />
+          <Tab />
         </div>
-      </div>
-      <Showpass />
-      <Faq />
+        : null}
     </>
 
   )
@@ -122,5 +136,34 @@ function Faq() {
         </div>
       </div>
     </div>
+  )
+}
+
+
+
+function Tab() {
+
+  let [tabactive, setTabactive] = useState(0);
+  let [content, tabcontent] = useState(tabdata[0]);
+
+  const changetab = (index) => {
+    setTabactive(index);
+    tabcontent(tabdata[index]);
+  }
+
+  return (
+    <>
+      <div className="w-[90%] mx-auto">
+        <ul className="flex space-x-4 text-gray-800 border-b-2 flex-wrap border-gray-200">
+
+          {tabdata.map((item, index) => {
+            return (
+              <li key={index} className={`bg-gray-300 rounded text-sm font-semibold cursor-pointer p-4 mb-2 transition duration-[.5s] lg:grow-0 grow-1 ${tabactive == index ? 'activetab' : ''}`} onClick={() => { changetab(index) }}>{item.name}</li>
+            )
+          })}
+        </ul>
+        <p className='mx-auto mb-10 py-4 transition duration-[1s] ease-in-out text-justify'>{content.description}</p>
+      </div>
+    </>
   )
 }
