@@ -1,17 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faBell, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faAngleDown, faBars, faBell, faXmark } from '@fortawesome/free-solid-svg-icons';
 import img1 from './assets/Image/like.png';
 import img2 from './assets/react.svg';
 import { NavLink, Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 
 const navigation = [
     { name: 'Dashboard', to: '/' },
     { name: 'Blog', to: '/blog' },
-    { name: 'Projects', to: '/todo' },
     { name: 'Contact', to: '/contact' },
 ];
 
@@ -20,6 +19,10 @@ function classNames(...classes) {
 }
 
 export default function Header() {
+
+    const [dmenu, setdmenu] = useState(false)
+    const [navhover, setnavhover] = useState(false)
+
     return (
         <Disclosure as="nav" className="bg-gray-100 shadow sticky top-0 z-50">
             {({ open }) => (
@@ -32,8 +35,6 @@ export default function Header() {
                                     <span className="absolute -inset-0.5" />
                                     <span className="sr-only">Open main menu</span>
                                     <FontAwesomeIcon icon={open ? faXmark : faBars} className="size-6" />
-                                    {/* <FontAwesomeIcon icon={faBars} className="block size-6 group-data-open:hidden" /> */}
-                                    {/* <FontAwesomeIcon icon={faXmark} className="hidden size-6 group-data-open:block" /> */}
                                 </DisclosureButton>
                             </div>
                             <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
@@ -43,10 +44,27 @@ export default function Header() {
                                 <div className="hidden sm:ml-6 sm:block">
                                     <div className="flex space-x-4">
                                         {navigation.map((item) => (
-                                            <NavLink key={item.name} to={item.to} className={({ isActive }) => classNames(isActive ? 'text-black border-b-2 border-[#615ff8]' : 'text-gray-500 hover:border-b-2 border-[#615ff8] hover:text-black', 'py-5 mx-3 text-base font-medium transition delay-150 duration-300 ease-in-out')}>
+                                            <NavLink key={item.name} to={item.to} className={({ isActive }) => classNames(isActive ? 'text-black border-b-3 border-[#615ff8]' : 'text-gray-500 hover:border-b-3 border-[#615ff8] hover:text-black', 'py-5 mx-3 text-base font-medium transition delay-150 duration-300 ease-in-out')} onClick={() => setnavhover(false)}>
                                                 {item.name}
                                             </NavLink>
                                         ))}
+                                        <div className={`${navhover ? 'text-black border-b-2 border-[#615ff8]' : 'text-gray-500 hover:border-b-3 border-[#615ff8] hover:text-black'} hover:border-b-3 border-[#615ff8] hover:text-black py-5 mx-3 text-base font-medium transition delay-150 duration-300 ease-in-out relative inline-block`} onMouseEnter={() => setdmenu(true)} onMouseLeave={() => setdmenu(false)}>
+                                            <button>
+                                                Projects
+                                                <FontAwesomeIcon icon={faAngleDown} className="ml-1" />
+                                            </button>
+
+                                            {dmenu && (
+                                                <div className="absolute left-[-5] z-10 mt-5.5 w-40 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-hidden">
+                                                    <div className="py-1" role="none">
+                                                        <NavLink to='/todo' className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" onClick={() => setnavhover(true)}>Todo List</NavLink>
+                                                        <NavLink to='/faq' className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" onClick={() => setnavhover(true)}>Faq</NavLink>
+                                                        <NavLink to='/pass' className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" onClick={() => setnavhover(true)}>Password Generator</NavLink>
+                                                    </div>
+                                                </div>
+                                            )}
+
+                                        </div>
 
                                     </div>
                                 </div>
@@ -61,7 +79,7 @@ export default function Header() {
                                 {/* Profile dropdown */}
                                 <Menu as="div" className="relative ml-3">
                                     <div>
-                                        <MenuButton className="relative flex rounded-full border border-[#615ff8] text-sm focus:ring-2 focus:ring-white focus:ring-offset-1 focus:ring-offset-gray-800 focus:outline-hidden">
+                                        <MenuButton className="relative flex rounded-full border border-[#615ff8] text-sm focus:ring-2 focus:ring-white focus:ring-offset-1 focus:ring-offset-gray-800 focus:outline-hidden cursor-pointer">
                                             <span className="absolute -inset-1.5" />
                                             <span className="sr-only">Open user menu</span>
                                             <img alt="profile" src={img1} className="size-8 rounded-full" />
@@ -99,8 +117,23 @@ export default function Header() {
                                     className="block rounded-md px-3 py-2 text-base font-medium active:bg-black active:text-white">
                                     {item.name}
                                 </DisclosureButton>
-                                
                             ))}
+                            <DisclosureButton
+                                as={NavLink}
+                                className="block rounded-md px-3 py-2 text-base font-medium">
+                                <button>
+                                    Projects
+                                    <FontAwesomeIcon icon={faAngleDown} className="ml-1" />
+                                </button>
+
+                                <div className=" z-10 mt-2 w-full text-gray-500">
+                                    <div className="py-1" role="none">
+                                        <NavLink to='/todo' className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">Todo List</NavLink>
+                                        <NavLink to='/faq' className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">Faq</NavLink>
+                                    </div>
+                                </div>
+
+                            </DisclosureButton>
                         </motion.div>
                     </DisclosurePanel>
 
