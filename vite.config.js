@@ -10,5 +10,5 @@ export default defineConfig({
     port: 5173, // Change if needed
     strictPort: true,
   },
-  base: '/React/',
+  // base: '/React/',
 });
