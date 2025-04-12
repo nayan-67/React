@@ -22,6 +22,7 @@ export default function Header() {
 
     const [dmenu, setdmenu] = useState(false)
     const [navhover, setnavhover] = useState(false)
+    const [mnav, setmnav] = useState(false)
 
     return (
         <Disclosure as="nav" className="bg-gray-100 shadow sticky top-0 z-50">
@@ -60,6 +61,7 @@ export default function Header() {
                                                         <NavLink to='/todo' className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" onClick={() => setnavhover(true)}>Todo List</NavLink>
                                                         <NavLink to='/faq' className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" onClick={() => setnavhover(true)}>Faq</NavLink>
                                                         <NavLink to='/pass' className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" onClick={() => setnavhover(true)}>Password Generator</NavLink>
+                                                        <NavLink to='/weather' className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" onClick={() => setnavhover(true)}>Weather Report</NavLink>
                                                     </div>
                                                 </div>
                                             )}
@@ -101,7 +103,7 @@ export default function Header() {
                         </div>
                     </div>
 
-                    <DisclosurePanel className="sm:hidden">
+                    <DisclosurePanel className="sm:hidden z-150">
                         <motion.div
                             initial={{ opacity: 0, y: -10 }}
                             animate={{ opacity: 1, y: 0 }}
@@ -121,17 +123,22 @@ export default function Header() {
                             <DisclosureButton
                                 as={NavLink}
                                 className="block rounded-md px-3 py-2 text-base font-medium">
-                                <button>
+                                <button onClick={() => { setmnav(!mnav);open=!open }}>
                                     Projects
                                     <FontAwesomeIcon icon={faAngleDown} className="ml-1" />
                                 </button>
 
-                                <div className=" z-10 mt-2 w-full text-gray-500">
-                                    <div className="py-1" role="none">
-                                        <NavLink to='/todo' className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">Todo List</NavLink>
-                                        <NavLink to='/faq' className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">Faq</NavLink>
+                                {mnav ?
+                                    <div className=" z-10 mt-2 w-full text-gray-500">
+                                        <div className="py-1" role="none">
+                                            <NavLink to='/todo' className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">Todo List</NavLink>
+                                            <NavLink to='/faq' className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">Faq</NavLink>
+                                            <NavLink to='/pass' className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">Password Generator</NavLink>
+                                            <NavLink to='/weather' className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">Wether Report</NavLink>
+                                        </div>
                                     </div>
-                                </div>
+                                    : null
+                                }
 
                             </DisclosureButton>
                         </motion.div>

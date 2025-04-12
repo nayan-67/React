@@ -7,11 +7,11 @@ export default function Blog() {
 
     const [load, setLoad] = useState(true)
     let [activetab, setActivetab] = useState(0);
-    let [content, tabcontent] = useState(cardinfo[0]);
+    let [content, setContent] = useState(cardinfo[0]);
 
     function tabchange(i) {
         setActivetab(i);
-        tabcontent(cardinfo[i])
+        setContent(cardinfo[i])
     }
 
     setTimeout(() => {
@@ -67,3 +67,6 @@ function Card({ citem }) {
         </div>
     )
 }
+
+
+

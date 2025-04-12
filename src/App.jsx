@@ -13,6 +13,7 @@ import Faq from './faq'
 import Blog from './blog'
 import Cardetails from './cardetails'
 import Passgen from './passgen'
+import Weather from './weather'
 
 export default function App() {
 
@@ -33,6 +34,7 @@ export default function App() {
           <Route path='todo' element={<Todo />} />
           <Route path='faq' element={<Faq />} />
           <Route path='pass' element={<Passgen />} />
+          <Route path='weather' element={<Weather />} />
           <Route path='blog' element={<Blog />} />
           <Route path="/blog/:id" element={<Cardetails/>} />
           <Route path="/user/:id" element={<User />} />

@@ -37,7 +37,7 @@ export default function Passgen() {
             <ToastContainer className={'top-5'} />
             <div className='h-[calc(100vh-4rem)] bg-cover bg-center brightness-50' style={{ backgroundImage: `url(${bgimage})` }}>
             </div>
-            <div className='h-auto w-[320px] backdrop-blur-xl text-white rounded-xl flex flex-col p-4 z-100 top-[50%] left-[50%] transform-[translate(-50%,-50%)] absolute shadow-[0_0px_35px_#61dafbaa]'>
+            <div className='h-auto w-[320px] backdrop-blur-xl text-white rounded-xl flex flex-col p-4 z-10 top-[55%] left-[50%] transform-[translate(-50%,-50%)] absolute shadow-[0_0px_35px_#61dafbaa]'>
                 <h1 className='text-center text-xl font-bold'>Password Generator</h1>
                 <div className='flex justify-between gap-2 my-3'>
                     <input type='text' className='w-full px-3 rounded-lg border-2 border-[#61dafb] outline-0' placeholder='' readOnly value={fpass} />
