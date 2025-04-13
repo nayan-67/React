@@ -20,8 +20,7 @@ export default function Blog() {
 
     return (
         <>
-            {load ? <Pageload /> : null}
-            {!load ?
+            {load ? <Pageload /> :
                 <div className='w-[90%] mx-auto rounded my-3'>
                     <h1 className='lg:text-[2rem] text-2xl text-center font-bold w-full bg-violet-500 text-white rounded p-3 font-["Ubuntu"]'>Card Component</h1>
                     <div className='w-full mx-auto my-2'>
@@ -45,7 +44,8 @@ export default function Blog() {
 
                     </div>
                 </div>
-                : null}
+            }
+
         </>
     )
 }

@@ -26,9 +26,8 @@ export default function Count() {
 
   return (
     <>
-      {load ? <Pageload /> : null}
-      {!load ?
-        <div>
+      {load ? <Pageload /> :
+        <>
           <div className='@container mx-auto text-center my-3 bg-[#242424] p-3 w-[90%] rounded text-white font-mono'>
             <h1 className='text-lg'>{count}</h1>
             <div>
@@ -38,8 +37,9 @@ export default function Count() {
           </div>
           <Showpass />
           <Tab />
-        </div>
-        : null}
+        </>
+      }
+
     </>
 
   )

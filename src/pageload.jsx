@@ -2,7 +2,6 @@ import React from 'react'
 import { HashLoader } from 'react-spinners'
 
 export default function Pageload() {
-
     
   return (
     <div className='fixed top-0 left-0 w-full h-full bg-[#0e0e0edf] flex justify-center items-center'>
@@ -10,3 +9,4 @@ export default function Pageload() {
     </div>
   )
 }
+

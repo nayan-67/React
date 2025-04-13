@@ -22,7 +22,6 @@ export default function Header() {
 
     const [dmenu, setdmenu] = useState(false)
     const [navhover, setnavhover] = useState(false)
-    const [mnav, setmnav] = useState(false)
 
     return (
         <Disclosure as="nav" className="bg-gray-100 shadow sticky top-0 z-50">
@@ -109,8 +108,7 @@ export default function Header() {
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -10 }}
                             transition={{ duration: 0.5 }}
-                            className="space-y-1 px-2 pt-2 pb-3"
-                        >
+                            className="space-y-1 px-2 pt-2 pb-3">
                             {navigation.map((item) => (
                                 <DisclosureButton
                                     as={NavLink}
@@ -123,22 +121,35 @@ export default function Header() {
                             <DisclosureButton
                                 as={NavLink}
                                 className="block rounded-md px-3 py-2 text-base font-medium">
-                                <button onClick={() => { setmnav(!mnav);open=!open }}>
-                                    Projects
-                                    <FontAwesomeIcon icon={faAngleDown} className="ml-1" />
-                                </button>
 
-                                {mnav ?
-                                    <div className=" z-10 mt-2 w-full text-gray-500">
-                                        <div className="py-1" role="none">
-                                            <NavLink to='/todo' className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">Todo List</NavLink>
-                                            <NavLink to='/faq' className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">Faq</NavLink>
-                                            <NavLink to='/pass' className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">Password Generator</NavLink>
-                                            <NavLink to='/weather' className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">Wether Report</NavLink>
-                                        </div>
+                                <Menu as="div" className="relative inline-block text-left w-full">
+                                    <div className=''>
+                                        <MenuButton className="inline-flex w-full justify-between gap-x-1.5 rounded-md py-2 text-base font-semibold text-gray-900 hover:bg-gray-50">
+                                            Projects
+                                            <FontAwesomeIcon icon={faAngleDown} className="ml-1" />
+                                        </MenuButton>
                                     </div>
-                                    : null
-                                }
+
+                                    <MenuItems
+                                        transition
+                                        className="z-10 mt-2 w-full transition focus:outline-hidden data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
+                                    >
+                                        <div className="py-1">
+                                            <MenuItem>
+                                                <NavLink to='/todo' className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">Todo List</NavLink>
+                                            </MenuItem>
+                                            <MenuItem>
+                                                <NavLink to='/faq' className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">Faq</NavLink>
+                                            </MenuItem>
+                                            <MenuItem>
+                                                <NavLink to='/pass' className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">Password Generator</NavLink>
+                                            </MenuItem>
+                                            <MenuItem>
+                                                <NavLink to='/weather' className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">Weather Report</NavLink>
+                                            </MenuItem>
+                                        </div>
+                                    </MenuItems>
+                                </Menu>
 
                             </DisclosureButton>
                         </motion.div>
