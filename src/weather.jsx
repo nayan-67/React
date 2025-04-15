@@ -1,20 +1,22 @@
-import React, { useState } from 'react'
-import w_img from './assets/Image/thumb.png'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faDroplet, faMagnifyingGlass, faWind } from '@fortawesome/free-solid-svg-icons'
-import { toast, ToastContainer } from 'react-toastify'
-import Sloader, { Boxloader } from './loader'
+import React, { useState, useEffect } from 'react';
+import w_img from './assets/Image/thumb.png';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faDroplet, faLocationCrosshairs, faMagnifyingGlass, faWind } from '@fortawesome/free-solid-svg-icons';
+import { toast, ToastContainer } from 'react-toastify';
+import Sloader, { Boxloader } from './loader';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
-
+import axios from 'axios';
+import './App.css';
 
 export default function Weather() {
-    let head = document.querySelector('#title')
-    head.innerHTML = 'Weather Report'
+    document.querySelector('#title').innerHTML = 'Weather Report';
 
-    let [city, setCity] = useState('')
-    let [wdata, setWdata] = useState()
-    let [loading, setLoading] = useState(true)
-    let [wloading, setWloading] = useState(false)
+    const [city, setCity] = useState('');
+    const [wdata, setWdata] = useState();
+    const [loading, setLoading] = useState(true);
+    const [wloading, setWloading] = useState(false);
+
+    const API_KEY = '751d66e130befad396405dc13796a57c';
 
     const icons = {
         '01d': 'https://lottie.host/c123feef-96e8-4c96-957e-3696f32e96bd/UH5VBgsjXB.lottie',
@@ -33,89 +35,129 @@ export default function Weather() {
         '11n': 'https://lottie.host/9fd2d7b0-8e95-455d-943f-12051ae54966/vvNEWrV92g.lottie',
         '13d': 'https://lottie.host/967b6e53-01ec-454f-a6ed-c902b52dc671/sDKTJ1TH2m.lottie',
         '13n': 'https://lottie.host/967b6e53-01ec-454f-a6ed-c902b52dc671/sDKTJ1TH2m.lottie'
-    }
+    };
 
-    const weathericon = (code) => icons[code]
+    const getIcon = (code) => icons[code];
 
-    let getData = async (e) => {
-        setWloading(true)
-        e.preventDefault()
-        setCity('')
-        let res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=751d66e130befad396405dc13796a57c&units=metric`)
-        let data = await res.json()
-        if (data.cod == '400') {
-            toast.error('Please Enter City Name')
-            setWdata(undefined)
-        } else if (data.cod == '404') {
-            toast.error(data.message)
-            toast.error('Please Enter Valid City Name')
-            setWdata(undefined)
-        } else {
-            setWdata(data)
+    const getcityData = async (e) => {
+        e.preventDefault();
+        setWloading(true);
+        setCity('');
+
+        try {
+            const res = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`);
+            setWdata(res.data);
+        } catch (error) {
+            if (error.response?.status === 400) {
+                toast.error('Please enter a city name.');
+            } else if (error.response?.status === 404) {
+                toast.error('City not found.');
+            } else {
+                toast.error('Something went wrong.');
+            }
+            setWdata(undefined);
         }
 
-        setWloading(false)
+        setWloading(false);
+    };
 
-    }
+    const getCurrentLocation = () => {
+        setWloading(true);
+        setCity('');
 
-    setTimeout(() => {
-        setLoading(false)
-    }, 2000);
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const { latitude, longitude } = position.coords;
+                getlocationData(latitude, longitude);
+            },
+            (error) => {
+                toast.error(error.message);
+                setWloading(false);
+            }
+        );
+    };
+
+    const getlocationData = async (lat, lon) => {
+        try {
+            const res = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`);
+            setWdata(res.data);
+        } catch (error) {
+            toast.error('Unable to fetch location weather.');
+            setWdata(undefined);
+        }
+
+        setWloading(false);
+    };
+
+    useEffect(() => {
+        setTimeout(() => setLoading(false), 2000);
+        // getCurrentLocation(); // Uncomment if you want to auto-fetch on page load
+    }, []);
 
     return (
         <>
-            {loading ? <Boxloader /> :
+            {loading ? <Boxloader />
+                :
                 <>
                     <ToastContainer />
+                    <div className='h-[calc(100vh-4rem)] bg-cover bg-center' style={{ backgroundImage: `url(${w_img})` }}></div>
 
-                    <div className='h-[calc(100vh-4rem)] bg-cover bg-center' style={{ backgroundImage: `URL(${w_img})` }}></div>
-                    <div className='bg-[#b9e4febf] lg:w-[600px] w-[90%] lg:h-[600px] h-[500px] rounded-2xl flex flex-col justify-start items-center absolute top-[55%] left-[50%] transform-[translate(-50%,-50%)] backdrop-blur-xl shadow-[0_0px_35px_#61dafbaa] lg:p-10 p-5 lg:gap-2'>
-                        <h1 className='text-3xl font-bold mb-3'>Weather Report</h1>
-                        <form className='h-auto w-full flex justify-between items-center mb-5 gap-2' onSubmit={getData}>
-                            <input type="search" placeholder='Enter City Name' value={city} className='w-full h-full rounded-lg p-2 border-2 border-[#242424] focus:outline-0' onChange={(e) => { setCity(e.target.value) }} />
-                            <button className='bg-[#242424] text-[#fff] w-auto h-full rounded-lg p-3 cursor-pointer flex justify-center items-center'>
-                                <FontAwesomeIcon icon={faMagnifyingGlass} className='text-xl' />
+                    <div className='bg-[#b9e4febf] lg:w-[600px] w-[90%] lg:h-[640px] h-[600px] rounded-2xl flex flex-col justify-start items-center absolute top-[55%] left-[50%] transform -translate-x-1/2 -translate-y-1/2 backdrop-blur-xl shadow-[0_0px_35px_#61dafbaa] lg:p-8 p-5 lg:gap-2 font-["Stylish"]'>
+                        <h1 className='text-3xl lg:text-4xl font-bold mb-3'>Weather Report</h1>
+
+                        <form className='h-[40px] w-full flex items-center gap-2' onSubmit={getcityData}>
+                            <input type="search" placeholder="Enter City Name" value={city} onChange={(e) => setCity(e.target.value)} className='h-full w-full pl-2 border-2 border-[#242424] rounded-lg focus:outline-none' />
+                            <button className='bg-[#242424] text-white h-full p-3 flex items-center justify-center rounded-lg cursor-pointer'>
+                                <FontAwesomeIcon icon={faMagnifyingGlass} />
                             </button>
                         </form>
-                        <Sloader hide={wloading ? '' : 'hidden'} />
-                        {wdata !== undefined ?
-                            <>
 
-                                <h1 className='text-3xl font-bold'>{wdata.name} {wdata.sys.country}</h1>
-                                <div className='w-full flex flex-col justify-center items-center lg:gap-3 border-b-2 border-[#242424] pb-5'>
-                                    <span className='h-[60px] lg:h-auto flex justify-center items-center m-5 lg:m-2'>
-                                        {wdata.weather[0].icon === ('50d'||'50n') ?
-                                            <img src={`https://openweathermap.org/img/wn/${wdata.weather[0].icon}@2x.png`} alt="Weather Icon" className='drop-shadow-[0_0px_35px_#1c2026]' />
-                                            :
-                                            <DotLottieReact src={weathericon(wdata.weather[0].icon)} className='drop-shadow-[0_0px_35px_#1c2026] h-[100px]' loop autoplay />
-                                        }
+                        <span className='text-lg lg:text-xl'>or</span>
+                        <button className='bg-[#242424] text-white rounded-lg px-3 py-2 mb-3 cursor-pointer' onClick={getCurrentLocation}>
+                            <FontAwesomeIcon icon={faLocationCrosshairs} className='pr-3' />
+                            Use Location
+                        </button>
+
+                        <Sloader hide={wloading ? '' : 'hidden'} />
+
+                        {wdata ?
+                            <>
+                                <h1 className='text-3xl font-bold'>{wdata.name}, {wdata.sys.country}</h1>
+                                <div className='flex flex-col items-center w-full border-b-2 border-[#242424] pb-5'>
+                                    <span className=''>
+                                        {wdata.weather[0].icon === '50d' || wdata.weather[0].icon === '50n' ? (
+                                            <img src={`https://openweathermap.org/img/wn/${wdata.weather[0].icon}@2x.png`} alt="Weather Icon" />
+                                        ) : (
+                                            <DotLottieReact src={getIcon(wdata.weather[0].icon)} className='h-[100px]' loop autoplay />
+                                        )}
                                     </span>
                                     <h1 className='text-3xl font-bold'>{wdata.main.temp}°C</h1>
                                     <h1 className='text-lg font-bold'>{wdata.weather[0].description}</h1>
                                 </div>
-                                <div className='w-full'>
+
+                                <div className='w-full mt-4'>
                                     <span className='font-bold'>Feels Like</span>
                                     <h1 className='text-3xl font-bold'>{wdata.main.feels_like}°C</h1>
-                                    <div className='w-full lg:flex justify-between items-center lg:py-5 py-3 lg:gap-10'>
-                                        <span className='w-full sm:w-[50%] flex justify-between items-center pb-1'>
+
+                                    <div className='lg:flex justify-between items-center py-5 gap-10'>
+                                        <span className='w-full sm:w-1/2 flex justify-between items-center pb-1'>
                                             <h1 className='text-xl font-bold'><FontAwesomeIcon icon={faDroplet} /> Humidity</h1>
                                             <h1 className='text-xl font-bold'>{wdata.main.humidity}%</h1>
                                         </span>
                                         <hr className='w-0.5 h-[50px] bg-[#242424] hidden lg:block' />
-                                        <span className='w-full sm:w-[50%] flex justify-between items-center'>
+                                        <span className='w-full sm:w-1/2 flex justify-between items-center'>
                                             <h1 className='text-xl font-bold'><FontAwesomeIcon icon={faWind} /> Wind</h1>
                                             <h1 className='text-xl font-bold'>{(wdata.wind.speed * 3.6).toFixed(1)} km/h</h1>
                                         </span>
                                     </div>
                                 </div>
                             </>
-                            : <h1 className='text-2xl font-bold'>{wloading ? 'Fetching...' : 'No Data'}</h1>
+                            :
+                            <h1 className='text-2xl font-bold mt-10'>{wloading ? 'Fetching...' : 'No Data'}</h1>
                         }
                     </div>
                 </>
             }
         </>
-    )
+    );
 }
-
-
