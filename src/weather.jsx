@@ -82,8 +82,8 @@ export default function Weather() {
                             <>
 
                                 <h1 className='text-3xl font-bold'>{wdata.name} {wdata.sys.country}</h1>
-                                <div className='w-full flex flex-col justify-center items-center gap-3 border-b-2 border-[#242424] pb-5'>
-                                    <span className='h-[60px] lg:h-auto flex justify-center items-center'>
+                                <div className='w-full flex flex-col justify-center items-center lg:gap-3 border-b-2 border-[#242424] pb-5'>
+                                    <span className='h-[60px] lg:h-auto flex justify-center items-center m-5 lg:m-2'>
                                         {wdata.weather[0].icon === ('50d'||'50n') ?
                                             <img src={`https://openweathermap.org/img/wn/${wdata.weather[0].icon}@2x.png`} alt="Weather Icon" className='drop-shadow-[0_0px_35px_#1c2026]' />
                                             :
